@@ -14,12 +14,15 @@ namespace TabloidMVC.Controllers
     {
         private readonly IPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
 
         public CommentController(IPostRepository postRepository,
-            ICommentRepository commentRepository)
+            ICommentRepository commentRepository,
+            IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
             _commentRepository = commentRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
 
@@ -33,6 +36,7 @@ namespace TabloidMVC.Controllers
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
             vm.Comments = _commentRepository.GetAll();
+            vm.Profile = 
             return View(vm);
         }
     }
