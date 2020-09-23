@@ -40,6 +40,55 @@ namespace TabloidMVC.Repositories
             }
         }
 
+        public void DeleteTag(int tagId)
+        {
+            using (var conn = Connection)
+            {
+                Connection.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                     DELETE FROM Tag Where Id = @tagId;
+                        ";
+                    cmd.Parameters.AddWithValue("@tagId", tagId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public Tag GetTagById(int tagId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, Name FROM Tag";
+                    
+                    cmd.Parameters.AddWithValue("@name", tagId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Tag tag = new Tag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("name"))
+                        };
+                        reader.Close();
+                        return tag;
+                    }
+                    else
+                    {
+                        reader.Close();
+                        return null;
+                    }
+                }
+            }
+        }
+
         public void AddTag(Tag tag)
         {
             using (var conn = Connection)
