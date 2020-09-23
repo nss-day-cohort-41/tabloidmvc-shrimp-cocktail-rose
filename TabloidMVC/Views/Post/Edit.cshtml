@@ -17,9 +17,6 @@
                     <input type="hidden" asp-for="Post.UserProfileId" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <input type="text" asp-for="Post.IsApproved" class="form-control" />
-                </div>
-                <div class="form-group">
                     <input type="hidden" asp-for="Post.CreateDateTime" class="form-control" />
                 </div>
                 <div class="form-group">
@@ -63,7 +60,3 @@
         <a asp-action="Index">Back to List</a>
     </div>
 </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
