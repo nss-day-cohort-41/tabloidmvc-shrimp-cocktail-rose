@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace TabloidMVC.Controllers
         {
             try
             {
-                _categoryRepository.Add(category);
+                _categoryRepository.AddCategory(category);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -56,21 +57,22 @@ namespace TabloidMVC.Controllers
         public ActionResult Edit(int id)
         {
             Category category = _categoryRepository.GetCategoryById(id);
-            return View();
+            return View(category);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Category category)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _categoryRepository.UpdateCategory(category);
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(category);
             }
         }
 

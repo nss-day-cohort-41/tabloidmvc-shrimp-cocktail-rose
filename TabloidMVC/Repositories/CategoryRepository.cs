@@ -69,7 +69,7 @@ namespace TabloidMVC.Repositories
             }
         }
 
-        public void Add(Category category)
+        public void AddCategory(Category category)
         {
             using (var conn = Connection)
             {
@@ -82,6 +82,25 @@ namespace TabloidMVC.Repositories
                     cmd.Parameters.AddWithValue("@Name", category.Name);
 
                     category.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            using(var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Category
+                                           SET [Name] = @name
+                                         WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+                    cmd.Parameters.AddWithValue("@id", category.Id);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
