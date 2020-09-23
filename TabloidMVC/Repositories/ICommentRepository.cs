@@ -9,6 +9,6 @@ namespace TabloidMVC.Repositories
 {
     public interface ICommentRepository
     {
-        List<Comment> GetAll();
+        List<Comment> GetAll(IUserProfileRepository _userProfileRepository);
     }
 }

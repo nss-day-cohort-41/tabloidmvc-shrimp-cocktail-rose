@@ -10,9 +10,10 @@ namespace TabloidMVC.Repositories
 {
     public class CommentRepository : BaseRepository, ICommentRepository
     {
+        
         public CommentRepository(IConfiguration config) : base(config) { }
 
-        public List<Comment> GetAll()
+        public List<Comment> GetAll(IUserProfileRepository _userProfileRepository)
         {
             using (var conn = Connection)
             {
@@ -36,6 +37,8 @@ namespace TabloidMVC.Repositories
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            User = _userProfileRepository.GetById(reader.GetInt32(reader.GetOrdinal("UserProfileId")))
+
                         });
                     }
 

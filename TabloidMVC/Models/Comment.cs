@@ -30,6 +30,7 @@ namespace TabloidMVC.Models
 
        
         public int UserProfileId { get; set; }
+        public UserProfile User { get; set; }
 
     }
 }
