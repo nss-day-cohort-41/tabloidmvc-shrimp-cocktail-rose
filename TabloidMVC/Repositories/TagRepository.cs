@@ -44,7 +44,7 @@ namespace TabloidMVC.Repositories
         {
             using (var conn = Connection)
             {
-                Connection.Open();
+                conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"

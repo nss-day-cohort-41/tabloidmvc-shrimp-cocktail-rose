@@ -102,7 +102,7 @@ namespace TabloidMVC.Controllers
             }
             catch
             {
-                return View();
+                return View(tag);
             }
         }
     }
