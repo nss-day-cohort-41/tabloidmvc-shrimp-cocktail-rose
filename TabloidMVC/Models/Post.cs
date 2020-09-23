@@ -33,5 +33,17 @@ namespace TabloidMVC.Models
         [DisplayName("Author")]
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
+
+        public int ReadTime
+        {
+            get
+            {
+                char[] delimiters = new char[] { ' ', '\r', '\n' };
+                int count = Content.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
+                float minutes = count/265f;
+                int minutesRounded = (int)Math.Ceiling(minutes);
+                return minutesRounded;
+            }
+        }
     }
 }
