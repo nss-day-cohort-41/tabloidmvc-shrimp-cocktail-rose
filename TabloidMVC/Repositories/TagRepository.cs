@@ -64,9 +64,9 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Name FROM Tag";
+                    cmd.CommandText = "SELECT Id, Name FROM Tag Where Id=@tagId;";
                     
-                    cmd.Parameters.AddWithValue("@name", tagId);
+                    cmd.Parameters.AddWithValue("@tagId", tagId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
