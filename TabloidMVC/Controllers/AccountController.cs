@@ -71,7 +71,7 @@ namespace TabloidMVC.Controllers
                 user.CreateDateTime = DateAndTime.Now;
                 user.UserTypeId = 2;
                 _userProfileRepository.AddUser(user);
-                return RedirectToAction("Login");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
