@@ -35,6 +35,7 @@ namespace TabloidMVC.Controllers
                 return View();
             }
 
+            //Checks to see if user profile is set to Deactivated. If so, returns "Invalid Email"
             if (userProfile.IsDeactivated == 1)
             {
                 ModelState.AddModelError("Email", "Invalid email");
