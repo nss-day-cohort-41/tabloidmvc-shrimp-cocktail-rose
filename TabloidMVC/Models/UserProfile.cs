@@ -14,6 +14,7 @@ namespace TabloidMVC.Models
         public string DisplayName { get; set; }
         public string Email { get; set; }
         public DateTime CreateDateTime { get; set; }
+        [DisplayName("Profile Picture")]
         public string ImageLocation { get; set; }
         [DisplayName("User Type")]
         public int UserTypeId { get; set; }
