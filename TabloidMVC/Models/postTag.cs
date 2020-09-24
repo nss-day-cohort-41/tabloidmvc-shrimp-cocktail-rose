@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace TabloidMVC.Models
 {
-    public class postTag
+    public class PostTag
     {
         public int Id { get; set; }
         public int PostId { get; set; }
         public int TagId { get; set; }
-
     }
 }
