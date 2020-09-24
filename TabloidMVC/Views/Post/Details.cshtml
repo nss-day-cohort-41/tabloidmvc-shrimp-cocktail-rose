@@ -12,7 +12,11 @@
                 <h1 class="text-black-50">@Model.Category.Name</h1>
             </div>
             <div class="row justify-content-between">
-                <p class="text-secondary">Written by @Model.UserProfile.DisplayName</p>
+                <p class="text-secondary">
+                    Written by @Model.UserProfile.DisplayName
+                    <br />
+                    This post takes approximately @Model.ReadTime @(Model.ReadTime == 1 ? "minute" : "minutes") to read
+                </p>
                 <p class="text-black-50">Published on @Html.DisplayFor(model => model.PublishDateTime)</p>
             </div>
             <div class="row">
