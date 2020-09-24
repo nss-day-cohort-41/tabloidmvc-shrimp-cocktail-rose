@@ -20,7 +20,7 @@
                 <p class="text-black-50">Published on @Html.DisplayFor(model => model.Post.PublishDateTime)</p>
             </div>
             <div class="row justify-content-sm-start" style="padding-bottom:1em;">
-                <span style="padding-right:2em;"><a class="btn btn-outline-dark btn-sm mx-1" asp-route-id="@Model.Post.Id" asp-area="" asp-controller="Tags" asp-action="Details">Manage Tags</a></span>
+                <span style="padding-right:2em;"><a class="btn btn-outline-dark btn-sm mx-1" asp-route-id="@Model.Post.Id" asp-area="" asp-controller="PostTag" asp-action="Edit">Manage Tags</a></span>
                 @foreach(Tag tag in Model.Tags) { <span style="font-size:1em;padding-right:1em">@tag.Name</span> }
             </div>
 

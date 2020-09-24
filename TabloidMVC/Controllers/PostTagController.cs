@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -34,27 +36,7 @@ namespace TabloidMVC.Controllers
             return View();
         }
 
-        // GET: PostTagController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PostTagController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
+  
         // GET: PostTagController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -74,11 +56,14 @@ namespace TabloidMVC.Controllers
         // POST: PostTagController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, List<Tag> AllTags)
         {
+            
             try
             {
-                return RedirectToAction(nameof(Index));
+                
+                
+                return RedirectToAction("Index","PostController");
             }
             catch
             {
@@ -86,25 +71,5 @@ namespace TabloidMVC.Controllers
             }
         }
 
-        // GET: PostTagController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PostTagController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

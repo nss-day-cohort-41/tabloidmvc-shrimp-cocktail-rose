@@ -1,0 +1,30 @@
+﻿@model TabloidMVC.Models.ViewModels.PostTagMgmtViewModel
+
+@{
+    ViewData["Title"] = "Post Tags";
+}
+
+<div class="container pt-5">
+    <h1>Post Tag Management</h1>
+    <form class="mt-5 card-body" asp-action="Edit">
+        @foreach (var item in Model.AllTags)
+        {
+            <div class="custom-checkbox">
+                <label>
+                    <input type="checkbox"
+                           name="@item.Name"
+                           value="@item.Id"
+                           @if (Model.PostTags.Any(tag => tag.Id == item.Id))
+                           {
+                               <text> checked </text> 
+                           }
+                            /> @item.Name
+                </label>
+            </div>
+        }
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary btn-block" />
+            <a asp-controller="Post" asp-route-id="@Model.Post.Id" asp-action="Details">Back to Post</a>
+        </div>
+    </form>
+</div>
