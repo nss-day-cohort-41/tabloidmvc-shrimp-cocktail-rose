@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TabloidMVC.Models;
 using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Repositories;
 
@@ -38,6 +39,21 @@ namespace TabloidMVC.Controllers
             vm.Comments = _commentRepository.GetAll(id, _userProfileRepository);
             
             return View(vm);
+        }
+
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public IActionResult Create(Comment comment)
+        {
+            //need to add postID!!==============================================
+            return View();
         }
     }
 }
