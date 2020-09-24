@@ -106,6 +106,7 @@ namespace TabloidMVC.Repositories
             }
         }
 
+        //Moves all posts associated with category to be deleted to "Other" (categoryId = 18)
         public void DeleteCategory(int categoryId)
         {
             using (var conn = Connection)
