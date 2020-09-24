@@ -13,7 +13,7 @@ namespace TabloidMVC.Repositories
         
         public CommentRepository(IConfiguration config) : base(config) { }
 
-        public List<Comment> GetAll(IUserProfileRepository _userProfileRepository)
+        public List<Comment> GetAll(int id, IUserProfileRepository _userProfileRepository)
         {
             using (var conn = Connection)
             {
@@ -21,7 +21,8 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment";
+                    cmd.CommandText = "SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     var reader = cmd.ExecuteReader();
 

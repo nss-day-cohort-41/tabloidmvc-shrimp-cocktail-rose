@@ -35,7 +35,7 @@ namespace TabloidMVC.Controllers
         {
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
-            vm.Comments = _commentRepository.GetAll(_userProfileRepository);
+            vm.Comments = _commentRepository.GetAll(id, _userProfileRepository);
             
             return View(vm);
         }
