@@ -52,6 +52,15 @@ namespace TabloidMVC.Controllers
 
         public ActionResult Create(int id, Comment comment)
         {
+            try
+            {
+                //_commentRepository
+            }
+
+            catch (Exception ex)
+            {
+                return View(comment);
+            }
             //need to add postID!!==============================================
 
             //need to get userId!
