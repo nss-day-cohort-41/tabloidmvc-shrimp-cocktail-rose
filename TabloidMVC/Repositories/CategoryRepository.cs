@@ -106,7 +106,7 @@ namespace TabloidMVC.Repositories
             }
         }
 
-        //Moves all posts associated with category to be deleted to "Other" (categoryId = 18)
+        //Moves all posts associated with category to be deleted to "Other"
         public void DeleteCategory(int categoryId)
         {
             using (var conn = Connection)
@@ -115,7 +115,7 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE Post
-                                        SET CategoryId = 18
+                                        SET CategoryId = (SELECT id FROM Category WHERE name = 'Other')
                                         WHERE CategoryId = @id;
 
                                         DELETE FROM Category 
