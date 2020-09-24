@@ -11,7 +11,7 @@ namespace TabloidMVC.Repositories
     {
         List<Comment> GetAll(int id, IUserProfileRepository _userProfileRepository);
 
-        public void AddComment(int id);
+        public void AddComment(Comment comment);
 
     }
 }
