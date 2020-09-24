@@ -77,6 +77,7 @@ namespace TabloidMVC.Controllers
         }
 
         // GET: CategoryController/Delete/5
+        //Need to figure out a way to ensure users are not able to delete Other category
         public ActionResult Delete(int id)
         {
             Category category = _categoryRepository.GetCategoryById(id);
