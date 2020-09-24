@@ -115,7 +115,7 @@ namespace TabloidMVC.Repositories
                 {
                     cmd.CommandText = @"UPDATE Post
                                         SET CategoryId = 18
-                                        WHERE CategoryId = @id
+                                        WHERE CategoryId = @id;
 
                                         DELETE FROM Category 
                                         WHERE Id = @id";
