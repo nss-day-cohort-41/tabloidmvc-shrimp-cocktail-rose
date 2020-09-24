@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TabloidMVC.Models;
 using TabloidMVC.Repositories;
 
 namespace TabloidMVC.Controllers
@@ -75,21 +76,23 @@ namespace TabloidMVC.Controllers
         // GET: UserProfileController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            UserProfile user = _userProfileRepository.GetById(id);
+            return View(user);
         }
 
-        // POST: UserProfileController/Delete/5
+        // POST Soft delete, moves User to a "Deactivated" group
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, UserProfile user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _userProfileRepository.DeleteUser(id);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(user);
             }
         }
     }

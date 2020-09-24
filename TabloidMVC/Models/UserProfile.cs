@@ -8,7 +8,9 @@ namespace TabloidMVC.Models
     public class UserProfile
     {
         public int Id { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Display Name")]
         public string DisplayName { get; set; }
@@ -20,6 +22,7 @@ namespace TabloidMVC.Models
         [DisplayName("User Type")]
         public int UserTypeId { get; set; }
         public UserType UserType { get; set; }
+        public int IsDeactivated { get; set; }
         [DisplayName("Full Name")]
         public string FullName
         {
