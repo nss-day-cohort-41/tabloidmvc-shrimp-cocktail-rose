@@ -4,25 +4,42 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Comments</h1>
 
-<div>
-    
-    <h4>@Model.Post.Title</h4>
-    
-        @foreach (var comment in Model.Comments)
-        {
-            <div class="border col-lg-12">
-                <h5>@comment.Subject</h5>
-                <div>@comment.User.DisplayName <div>@comment.CreateDateTime</div></div>
-                <p>@comment.Content</p>
-            </div>
-        }
-   
-    <hr />
-    <dl class="row">
-    </dl>
+
+<div class="container pt-5">
+    <h1>Comments</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h4>@Model.Post.Title</h4>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model.Comments)
+            {
+                <tr>
+                    <td>
+                        @comment.Subject
+                    </td>
+                    <td>
+                        <div>@comment.User.DisplayName <div>@comment.CreateDateTime</div></div>
+                        <p>@comment.Content</p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <a asp-controller="Post" asp-route-id="@Model.Post.Id" asp-action="Details">Back to Post</a>
+    </div>
 </div>
-<div>
-    <a asp-controller="Post" asp-route-id="@Model.Post.Id" asp-action="Details">Back to Post</a>
-</div>
+
+
+
+
+

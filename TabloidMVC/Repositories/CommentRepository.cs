@@ -21,7 +21,8 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment WHERE PostId = @id";
+                    cmd.CommandText = "SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment WHERE PostId = @id ORDER BY CreateDateTime Desc";
+
                     cmd.Parameters.AddWithValue("@id", id);
 
                     var reader = cmd.ExecuteReader();
