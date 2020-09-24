@@ -80,19 +80,19 @@ namespace TabloidMVC.Controllers
             return View(user);
         }
 
-        //Soft delete, moves User to a "Deactivated" group
-        // POST: UserProfileController/Delete/5
+        // POST Soft delete, moves User to a "Deactivated" group
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, UserProfile user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _userProfileRepository.DeleteUser(id);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(user);
             }
         }
     }
