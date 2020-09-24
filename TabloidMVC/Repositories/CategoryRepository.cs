@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -88,7 +89,7 @@ namespace TabloidMVC.Repositories
 
         public void UpdateCategory(Category category)
         {
-            using(var conn = Connection)
+            using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
@@ -101,6 +102,26 @@ namespace TabloidMVC.Repositories
                     cmd.Parameters.AddWithValue("@id", category.Id);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteCategory(int categoryId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Post
+                                        SET CategoryId = 18
+                                        WHERE CategoryId = @id
+
+                                        DELETE FROM Category 
+                                        WHERE Id = @id";
+
+
+                    cmd.Parameters.AddWithValue("@id", categoryId);
                 }
             }
         }
