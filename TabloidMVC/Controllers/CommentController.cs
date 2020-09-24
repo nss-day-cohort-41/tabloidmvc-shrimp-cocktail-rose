@@ -27,12 +27,12 @@ namespace TabloidMVC.Controllers
         }
 
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Details(int id)
+        public ActionResult Details(int id)
         {
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
@@ -42,7 +42,7 @@ namespace TabloidMVC.Controllers
         }
 
 
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -50,9 +50,12 @@ namespace TabloidMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult Create(Comment comment)
+        public ActionResult Create(int id, Comment comment)
         {
             //need to add postID!!==============================================
+
+            //need to get userId!
+
             return View();
         }
     }

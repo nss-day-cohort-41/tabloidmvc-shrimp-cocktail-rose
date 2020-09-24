@@ -52,5 +52,11 @@ namespace TabloidMVC.Repositories
         }
 
 
+        public void AddComment(int id)
+        {
+
+        }
+
+
     }
 }
