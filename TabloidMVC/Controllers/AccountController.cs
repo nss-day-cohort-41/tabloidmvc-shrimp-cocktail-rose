@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -55,5 +56,28 @@ namespace TabloidMVC.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserProfile user)
+        {
+            try
+            {
+                user.CreateDateTime = DateAndTime.Now;
+                user.UserTypeId = 2;
+                _userProfileRepository.AddUser(user);
+                return RedirectToAction("Login");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }
