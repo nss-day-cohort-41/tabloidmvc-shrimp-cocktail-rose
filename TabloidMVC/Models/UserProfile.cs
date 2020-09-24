@@ -13,6 +13,7 @@ namespace TabloidMVC.Models
         [DisplayName("Display Name")]
         public string DisplayName { get; set; }
         public string Email { get; set; }
+        [DisplayName("Joined Tabloid On")]
         public DateTime CreateDateTime { get; set; }
         [DisplayName("Profile Picture")]
         public string ImageLocation { get; set; }
