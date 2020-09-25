@@ -177,7 +177,7 @@ namespace TabloidMVC.Repositories
         }
 
         //Soft delete, sends user to "deactivated" page
-        public void DeleteUser(int id)
+        public void DeleteUser(UserProfile user)
         {
             using (var conn = Connection)
             {
@@ -189,15 +189,16 @@ namespace TabloidMVC.Repositories
                         SELECT @Admins = Count(*)
                         FROM UserProfile
                         WHERE UserTypeId = 1 AND IsDeactivated = 0
-                        IF @Admins = 1 AND @userType = 1
-                            THROW 51000, 'There must be at least 1 admin', 1;
+                        IF @Admins = 1 AND @UserTypeId = 1
+                            THROW 51000, 'There must be at least 1 admin', 1
                         ELSE
                             UPDATE UserProfile
                             SET IsDeactivated = @IsDeactivated
                             WHERE id = @id";
 
+                    cmd.Parameters.AddWithValue("@UserTypeId", user.UserTypeId);
                     cmd.Parameters.AddWithValue("@IsDeactivated", 1);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", user.Id);
 
                     cmd.ExecuteNonQuery();
                 }
