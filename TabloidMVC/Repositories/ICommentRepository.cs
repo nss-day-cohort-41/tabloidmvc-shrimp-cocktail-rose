@@ -13,5 +13,7 @@ namespace TabloidMVC.Repositories
 
         public void AddComment(Comment comment);
 
+        public void Delete(Comment comment);
+
     }
 }

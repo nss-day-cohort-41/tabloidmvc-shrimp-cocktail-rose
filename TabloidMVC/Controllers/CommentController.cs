@@ -75,11 +75,7 @@ namespace TabloidMVC.Controllers
             {
                 return View(comment);
             }
-            //need to add postID!!==============================================
-
-            //need to get userId!
-
-            
+           
         }
     }
 }

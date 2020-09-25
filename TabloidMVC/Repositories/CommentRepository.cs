@@ -80,6 +80,12 @@ VALUES (@PostId, @UserProfileId, @Content, @Subject, @CreateDateTime)";
         }
 
 
+        public void Delete(Comment comment)
+        {
+
+        }
+
+
 
 
 
