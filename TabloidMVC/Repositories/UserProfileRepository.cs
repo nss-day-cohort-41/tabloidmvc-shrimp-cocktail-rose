@@ -223,7 +223,7 @@ namespace TabloidMVC.Repositories
             }
         }
 
-        
+        /*
         public void UpdateUser(UserProfile user)
         {
             using (var conn = Connection)
@@ -256,9 +256,9 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-        
+        */
 
-        /*
+        
         public void UpdateUser(UserProfile user)
         {
             using (var conn = Connection)
@@ -267,7 +267,7 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE UserProfile
-	                                       SET UserTypeId = @userTypeId,	   
+	                                       SET UserTypeId = @userTypeId	   
                                          WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@userTypeId", user.UserTypeId);
@@ -277,7 +277,7 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-        */
+        
         //Soft delete, sends user to "deactivated" page
         public void DeleteUser(int id)
         {

@@ -75,7 +75,7 @@ namespace TabloidMVC.Controllers
                 UserTypes = types
             };
 
-            if (vm == null)
+            if (vm.UserProfile == null)
             {
                 return NotFound();
             }
@@ -87,16 +87,8 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, UserProfile user)
         {
-            try
-            {
                 _userProfileRepository.UpdateUser(user);
                 return RedirectToAction("Index");
-
-            }
-            catch (Exception ex)
-            {
-                return NotFound();
-            }
         }
 
         // GET: UserProfileController/Reactivate/5
