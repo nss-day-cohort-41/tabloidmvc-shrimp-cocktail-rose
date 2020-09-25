@@ -184,9 +184,17 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE UserProfile
-                                           SET IsDeactivated = @IsDeactivated
-                                        WHERE id = @id";
+                    cmd.CommandText = @"
+                        DECLARE @Admins INT
+                        SELECT @Admins = Count(*)
+                        FROM UserProfile
+                        WHERE UserTypeId = 1 AND IsDeactivated = 0
+                        IF @Admins = 1 AND @userType = 1
+                            THROW 51000, 'There must be at least 1 admin', 1;
+                        ELSE
+                            UPDATE UserProfile
+                            SET IsDeactivated = @IsDeactivated
+                            WHERE id = @id";
 
                     cmd.Parameters.AddWithValue("@IsDeactivated", 1);
                     cmd.Parameters.AddWithValue("@id", id);
