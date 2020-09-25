@@ -80,9 +80,58 @@ VALUES (@PostId, @UserProfileId, @Content, @Subject, @CreateDateTime)";
         }
 
 
-        public void Delete(Comment comment)
+        public Comment GetCommentById(int id)
         {
+            using(var conn = Connection)
+            {
+                conn.Open();
 
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment
+                                        WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    var reader = cmd.ExecuteReader();
+                    var comment = new Comment();
+
+
+                    while (reader.Read())
+                    {
+                        comment.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        comment.PostId = reader.GetInt32(reader.GetOrdinal("PostId"));
+                        comment.UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId"));
+                        comment.Subject = reader.GetString(reader.GetOrdinal("Subject"));
+                        comment.Content = reader.GetString(reader.GetOrdinal("Content"));
+                        comment.CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"));
+                    }
+                  
+                   
+
+                  reader.Close();
+
+                    return comment;
+
+                }
+            }
+        }
+
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Comment WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
         }
 
 

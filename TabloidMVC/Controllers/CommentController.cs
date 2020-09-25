@@ -35,29 +35,30 @@ namespace TabloidMVC.Controllers
         }
 
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
             vm.Comments = _commentRepository.GetAll(id, _userProfileRepository);
+            vm.UserId = GetCurrentUserProfileId();
             
             return View(vm);
         }
 
 
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, Comment comment)
+        public IActionResult Create(int id, Comment comment)
         {
             try
             {
@@ -76,6 +77,34 @@ namespace TabloidMVC.Controllers
                 return View(comment);
             }
            
+        }
+
+
+        public IActionResult Delete(int id)
+        {
+            Comment comment = _commentRepository.GetCommentById(id);
+
+            return View(comment);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, Comment comment)
+        {
+            try
+            {
+                int postId = comment.PostId;
+                _commentRepository.Delete(id);
+                return RedirectToAction("Index", "Post");
+            }
+
+            catch
+            {
+                return View(comment);
+            }
         }
     }
 }
