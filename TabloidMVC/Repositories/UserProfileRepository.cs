@@ -64,7 +64,7 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT u.id, u.FirstName, u.LastName, u.DisplayName, u.Email,
-                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated
+                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated,
                                                ut.[Name] AS UserTypeName
                                           FROM UserProfile u
                                      LEFT JOIN UserType ut ON u.UserTypeId = ut.id
@@ -236,6 +236,25 @@ namespace TabloidMVC.Repositories
                                         WHERE id = @id";
 
                     cmd.Parameters.AddWithValue("@IsDeactivated", 1);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void ReactivateUser(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile
+                                           SET IsDeactivated = @IsDeactivated
+                                        WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@IsDeactivated", 0);
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
