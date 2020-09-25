@@ -85,15 +85,17 @@ namespace TabloidMVC.Controllers
         // POST: UserProfileController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, UserProfile user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _userProfileRepository.UpdateUser(user);
+                return RedirectToAction("Index");
+
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return NotFound();
             }
         }
 
