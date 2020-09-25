@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualBasic;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using TabloidMVC.Models;
 using TabloidMVC.Models.ViewModels;
@@ -15,11 +16,13 @@ namespace TabloidMVC.Controllers
     {
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ITagRepository _tagRepository;
 
-        public PostController(IPostRepository postRepository, ICategoryRepository categoryRepository)
+        public PostController(IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository)
         {
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
+            _tagRepository = tagRepository;
         }
         private int GetCurrentUserProfileId()
         {
@@ -42,7 +45,7 @@ namespace TabloidMVC.Controllers
 
         public IActionResult Details(int id)
         {
-            var post = _postRepository.GetPublishedPostById(id);
+            Post post = _postRepository.GetPublishedPostById(id);
             if (post == null)
             {
                 int userId = GetCurrentUserProfileId();
@@ -52,7 +55,14 @@ namespace TabloidMVC.Controllers
                     return NotFound();
                 }
             }
-            return View(post);
+            List<Tag> tags = _tagRepository.GetPostTags(post.Id);
+
+            PostDetailViewModel vm = new PostDetailViewModel()
+            {
+                Post = post,
+                Tags = tags
+            };
+            return View(vm);
         }
 
         public IActionResult Create()
