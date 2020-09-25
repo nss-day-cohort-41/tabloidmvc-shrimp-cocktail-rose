@@ -14,7 +14,7 @@ namespace TabloidMVC.Repositories
         
         public CommentRepository(IConfiguration config) : base(config) { }
 
-        public List<Comment> GetAll(int id, IUserProfileRepository _userProfileRepository)
+        public List<Comment> GetAll(int id)
         {
             using (var conn = Connection)
             {
@@ -22,7 +22,7 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, PostId, UserProfileId, Subject, Content, CreateDateTime FROM Comment WHERE PostId = @id ORDER BY CreateDateTime Desc";
+                    cmd.CommandText = "SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, u.id, u.FirstName, u.LastName, u.DisplayName, u.Email, u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated FROM Comment c LEFT JOIN UserProfile u ON C.UserProfileId = u.Id WHERE c.PostId = @id ORDER BY c.CreateDateTime Desc";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -40,8 +40,17 @@ namespace TabloidMVC.Repositories
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                            User = _userProfileRepository.GetById(reader.GetInt32(reader.GetOrdinal("UserProfileId")))
-
+                            User = new UserProfile()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                IsDeactivated = reader.GetInt32(reader.GetOrdinal("IsDeactivated"))
+                            }
                         });
                     }
 

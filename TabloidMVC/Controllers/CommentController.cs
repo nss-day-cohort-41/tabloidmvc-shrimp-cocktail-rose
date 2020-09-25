@@ -44,7 +44,8 @@ namespace TabloidMVC.Controllers
         {
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
-            vm.Comments = _commentRepository.GetAll(id, _userProfileRepository);
+           
+            vm.Comments = _commentRepository.GetAll(id);
             vm.UserId = GetCurrentUserProfileId();
             
             return View(vm);
@@ -96,9 +97,18 @@ namespace TabloidMVC.Controllers
         {
             try
             {
+                var vm = new CommentPostViewModel();
+
+                vm.Comments = _commentRepository.GetAll(comment.PostId);
+                vm.Post = _postRepository.GetPublishedPostById(comment.PostId);
+
                 int postId = comment.PostId;
                 _commentRepository.Delete(id);
-                return RedirectToAction("Details", "Comment", new { id = id });
+               ///errror is here
+
+
+              
+                return RedirectToAction("details", "Comment", new { id = vm.Post.Id });
             }
 
             catch

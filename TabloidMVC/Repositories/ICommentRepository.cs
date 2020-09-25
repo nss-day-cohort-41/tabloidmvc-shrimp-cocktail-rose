@@ -9,7 +9,7 @@ namespace TabloidMVC.Repositories
 {
     public interface ICommentRepository
     {
-        List<Comment> GetAll(int id, IUserProfileRepository _userProfileRepository);
+        List<Comment> GetAll(int id);
 
         public void AddComment(Comment comment);
 
