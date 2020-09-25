@@ -98,7 +98,7 @@ namespace TabloidMVC.Controllers
             {
                 int postId = comment.PostId;
                 _commentRepository.Delete(id);
-                return RedirectToAction("Index", "Post");
+                return RedirectToAction("Details", "Comment", new { id = id });
             }
 
             catch
