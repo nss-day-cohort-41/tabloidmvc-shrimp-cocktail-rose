@@ -18,12 +18,13 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT u.id, u.FirstName, u.LastName, u.DisplayName, u.Email,
-                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated
+                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated,
                                                ut.[Name] AS UserTypeName
                                           FROM UserProfile u
                                      LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                                          WHERE IsDeactivated = 0
                                       ORDER BY u.DisplayName";
+
                     var reader = cmd.ExecuteReader();
 
                     var users = new List<UserProfile>();
