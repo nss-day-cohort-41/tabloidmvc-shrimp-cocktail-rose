@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TabloidMVC.Models;
 using TabloidMVC.Repositories;
 
@@ -22,6 +23,12 @@ namespace TabloidMVC.Controllers
         {
             var users = _userProfileRepository.GetAll();
             return View(users);
+        }
+
+        public ActionResult DeactivatedIndex()
+        {
+            var deactivatedUsers = _userProfileRepository.GetDeactivated();
+            return View(deactivatedUsers);
         }
 
         // GET: UserProfileController/Details/5
@@ -70,6 +77,29 @@ namespace TabloidMVC.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        // GET: UserProfileController/Reactivate/5
+        public ActionResult Reactivate(int id)
+        {
+            UserProfile user = _userProfileRepository.GetById(id);
+            return View(user);
+        }
+
+        // POST: UserProfileController/Reactivate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reactivate(int id, UserProfile user)
+        {
+            try
+            {
+                _userProfileRepository.ReactivateUser(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(user);
             }
         }
 

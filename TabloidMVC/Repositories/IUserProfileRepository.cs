@@ -7,7 +7,9 @@ namespace TabloidMVC.Repositories
     {
         void AddUser(UserProfile user);
         void DeleteUser(UserProfile user);
+        void ReactivateUser(int id);
         List<UserProfile> GetAll();
+        List<UserProfile> GetDeactivated();
         UserProfile GetByEmail(string email);
         UserProfile GetById(int id);
     }
