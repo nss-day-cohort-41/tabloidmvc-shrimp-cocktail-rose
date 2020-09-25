@@ -133,6 +133,8 @@ namespace TabloidMVC.Controllers
             }
             catch
             {
+                user = _userProfileRepository.GetById(id);
+                user.Error = true;
                 return View(user);
             }
         }
