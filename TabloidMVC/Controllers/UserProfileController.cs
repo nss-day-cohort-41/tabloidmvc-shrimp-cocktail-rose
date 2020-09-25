@@ -62,7 +62,8 @@ namespace TabloidMVC.Controllers
         // GET: UserProfileController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            UserProfile user = _userProfileRepository.GetById(id);
+            return View(user);
         }
 
         // POST: UserProfileController/Edit/5
