@@ -85,9 +85,9 @@ namespace TabloidMVC.Controllers
         // POST: UserProfileController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, UserProfile user)
+        public ActionResult Edit(int id, UserProfileEditViewModel user)
         {
-                _userProfileRepository.UpdateUser(user);
+                _userProfileRepository.UpdateUser(user.UserProfile);
                 return RedirectToAction("Index");
         }
 
