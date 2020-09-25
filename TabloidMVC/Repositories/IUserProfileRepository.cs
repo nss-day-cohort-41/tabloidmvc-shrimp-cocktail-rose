@@ -6,7 +6,7 @@ namespace TabloidMVC.Repositories
     public interface IUserProfileRepository
     {
         void AddUser(UserProfile user);
-        void DeleteUser(UserProfile user);
+        void DeleteUser(int id);
         void ReactivateUser(int id);
         List<UserProfile> GetAll();
         List<UserProfile> GetDeactivated();

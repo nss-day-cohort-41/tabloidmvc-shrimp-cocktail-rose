@@ -113,15 +113,17 @@ namespace TabloidMVC.Controllers
         // POST Soft delete, moves User to a "Deactivated" group
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(UserProfile user)
+        public ActionResult Delete(int id, UserProfile user)
         {
             try
             {
-                _userProfileRepository.DeleteUser(user);
+                _userProfileRepository.DeleteUser(id);
                 return RedirectToAction("Index");
             }
             catch
             {
+                user = _userProfileRepository.GetById(id);
+                user.Error = true;
                 return View(user);
             }
         }

@@ -31,5 +31,6 @@ namespace TabloidMVC.Models
                 return $"{FirstName} {LastName}";
             }
         }
+        public bool Error { get; set; }
     }
 }

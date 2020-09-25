@@ -148,7 +148,6 @@ namespace TabloidMVC.Repositories
             }
         }
 
-
         public UserProfile GetById(int id)
         {
             using (var conn = Connection)
@@ -224,32 +223,31 @@ namespace TabloidMVC.Repositories
         }
 
         //Soft delete, sends user to "deactivated" page
-        public void DeleteUser(UserProfile user)
+        public void DeleteUser(int id)
         {
-            using (var conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
+                using (var conn = Connection)
                 {
-                    cmd.CommandText = @"
-                        DECLARE @Admins INT
-                        SELECT @Admins = Count(*)
-                        FROM UserProfile
-                        WHERE UserTypeId = 1 AND IsDeactivated = 0
-                        IF @Admins = 1 AND @UserTypeId = 1
-                            THROW 51000, 'There must be at least 1 admin', 1
-                        ELSE
-                            UPDATE UserProfile
-                            SET IsDeactivated = @IsDeactivated
-                            WHERE id = @id";
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"
+                            DECLARE @Admins INT
+                            SELECT @Admins = Count(*)
+                            FROM UserProfile
+                            WHERE UserTypeId = 1 AND IsDeactivated = 0
+                            IF @Admins = 1 AND (SELECT UserTypeId FROM UserProfile WHERE id = @id) = 1
+                                THROW 51000, 'There must be at least 1 admin', 1
+                            ELSE
+                                UPDATE UserProfile
+                                SET IsDeactivated = @IsDeactivated
+                                WHERE id = @id";
 
-                    cmd.Parameters.AddWithValue("@UserTypeId", user.UserTypeId);
-                    cmd.Parameters.AddWithValue("@IsDeactivated", 1);
-                    cmd.Parameters.AddWithValue("@id", user.Id);
+                        cmd.Parameters.AddWithValue("@IsDeactivated", 1);
+                        cmd.Parameters.AddWithValue("@id", id);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-            }
         }
 
         public void ReactivateUser(int id)
@@ -270,11 +268,5 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-
-
-
-
-
-
     }
 }

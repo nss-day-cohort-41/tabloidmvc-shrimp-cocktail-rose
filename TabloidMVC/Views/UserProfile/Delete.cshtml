@@ -8,10 +8,19 @@
 <div class="container pt-5">
     <h3>Are you sure you want to deactivate @Model.FullName?</h3>
     <form asp-action="Delete">
-        <input type="submit" value="Deactivate" class="btn btn-danger" /> |
+        <input type="submit" value="Deactivate" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
-    <br/>
+
+    <br />
+
+    @if (Model.Error)
+    {
+        <div class="alert alert-danger" role="alert">
+            Unable to deactivate account. There must be at least one administrator.
+        </div>
+    }
+
     <div>
         <dl class="row">
             <dt class="col-sm-2">
