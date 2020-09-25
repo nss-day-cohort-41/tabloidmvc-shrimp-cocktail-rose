@@ -17,33 +17,34 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" asp-area="" asp-controller="Home" asp-action="Index">TABLOID</a>
+            <div class="container" >
+            
+                <span style="font-size:1vw"><a class="navbar-brand js-scroll-trigger" asp-area="" asp-controller="Home" asp-action="Index" style="text-wrap:none">TABLOID</a></span>
                 <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-1 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Category" asp-action="Index">CATEGORY MANAGEMENT</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-1 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Category" asp-action="Index">CATEGORY MANAGEMENT</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Post" asp-action="Index">POSTS</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-1 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Post" asp-action="Index">POSTS</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Tag" asp-action="Index">TAG MANAGEMENT</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-1 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Tag" asp-action="Index">TAG MANAGEMENT</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Post" asp-action="MyPosts">MY POSTS</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Post" asp-action="MyPosts">MY POSTS</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="UserProfile" asp-action="Index">USER PROFILES</a>
+                            <li class="nav-item mx-0 mx-lg-1 style="text-wrap:normal"">
+                                <a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="UserProfile" asp-action="Index">USER PROFILES</a>
                             </li>
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="" asp-controller="Account" asp-action="Logout">LOGOUT</a>
+                            <li class="nav-item mx-0 mx-lg-1" style="text-wrap:normal">
+                                <a class="nav-link py-3 px-0 px-lg-1 rounded js-scroll-trigger" asp-area="" asp-controller="Account" asp-action="Logout">LOGOUT</a>
                             </li>
                         }
                         else
