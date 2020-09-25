@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TabloidMVC.Models;
+using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Repositories;
 
 namespace TabloidMVC.Controllers
@@ -13,10 +15,12 @@ namespace TabloidMVC.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IUserTypeRepository _userTypeRepository;
 
-        public UserProfileController(IUserProfileRepository userProfileRepository)
+        public UserProfileController(IUserProfileRepository userProfileRepository, IUserTypeRepository userTypeRepository)
         {
             _userProfileRepository = userProfileRepository;
+            _userTypeRepository = userTypeRepository;
         }
         // GET: UserProfileController
         public ActionResult Index()
@@ -63,7 +67,19 @@ namespace TabloidMVC.Controllers
         public ActionResult Edit(int id)
         {
             UserProfile user = _userProfileRepository.GetById(id);
-            return View(user);
+            List<UserType> types = _userTypeRepository.GetAll();
+
+            UserProfileEditViewModel vm = new UserProfileEditViewModel()
+            {
+                UserProfile = user,
+                UserTypes = types
+            };
+
+            if (vm == null)
+            {
+                return NotFound();
+            }
+            return View(vm);
         }
 
         // POST: UserProfileController/Edit/5
