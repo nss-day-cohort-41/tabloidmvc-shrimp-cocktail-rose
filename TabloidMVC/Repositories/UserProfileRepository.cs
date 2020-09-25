@@ -18,11 +18,57 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT u.id, u.FirstName, u.LastName, u.DisplayName, u.Email,
-                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId,
+                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated
                                                ut.[Name] AS UserTypeName
                                           FROM UserProfile u
                                      LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                                          WHERE IsDeactivated = 0
+                                      ORDER BY u.DisplayName";
+
+                    var reader = cmd.ExecuteReader();
+
+                    var users = new List<UserProfile>();
+
+                    while (reader.Read())
+                    {
+                        users.Add(new UserProfile()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Email = reader.GetString(reader.GetOrdinal("Email")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
+                            UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                            IsDeactivated = reader.GetInt32(reader.GetOrdinal("IsDeactivated")),
+                            UserType = new UserType()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                            },
+                        });
+                    }
+
+                    reader.Close();
+                    return users;
+                }
+            }
+        }
+
+        public List<UserProfile> GetDeactivated()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT u.id, u.FirstName, u.LastName, u.DisplayName, u.Email,
+                                               u.CreateDateTime, u.ImageLocation, u.UserTypeId, u.IsDeactivated
+                                               ut.[Name] AS UserTypeName
+                                          FROM UserProfile u
+                                     LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                                         WHERE IsDeactivated = 1
                                       ORDER BY u.DisplayName";
                     var reader = cmd.ExecuteReader();
 
@@ -40,6 +86,7 @@ namespace TabloidMVC.Repositories
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
                             UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                            IsDeactivated = reader.GetInt32(reader.GetOrdinal("IsDeactivated")),
                             UserType = new UserType()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
