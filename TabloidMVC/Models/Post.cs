@@ -38,10 +38,16 @@ namespace TabloidMVC.Models
         {
             get
             {
-                char[] delimiters = new char[] { ' ', '\r', '\n' };
-                int count = Content.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
-                float minutes = count/265f;
-                int minutesRounded = (int)Math.Ceiling(minutes);
+                int minutesRounded = 0;
+
+                if (Content != null)
+                {
+                    char[] delimiters = new char[] { ' ', '\r', '\n' };
+                    int count = Content.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
+                    float minutes = count / 265f;
+                    minutesRounded = (int)Math.Ceiling(minutes);
+                }
+
                 return minutesRounded;
             }
         }
