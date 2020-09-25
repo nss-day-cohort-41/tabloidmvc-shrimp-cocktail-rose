@@ -40,6 +40,77 @@ namespace TabloidMVC.Repositories
             }
         }
 
+        public List<Tag> GetPostTags(int postId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Tag.Id, Tag.Name From Tag
+                        LEFT JOIN PostTag on Tag.Id= PostTag.TagId
+                        WHERE PostTag.PostId = @postId;";
+                    cmd.Parameters.AddWithValue("@postId", postId);
+
+                    var reader = cmd.ExecuteReader();
+                    List<Tag> tags = new List<Tag>();
+
+                    while (reader.Read())
+                    {
+                        tags.Add(new Tag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        });
+                    }
+                    reader.Close();
+                    return tags;
+                }
+            }
+        }
+
+        public void AddPostTag(PostTag postTag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO PostTag (PostId,TagId) 
+                    OUTPUT INSERTED.ID
+                    VALUES (@postId,@tagId);
+                    ";
+
+                    cmd.Parameters.AddWithValue("@postId", postTag.PostId);
+                    cmd.Parameters.AddWithValue("@tagId", postTag.TagId);
+
+                    int newlyCreatedPostTagId = (int)cmd.ExecuteScalar();
+
+                    postTag.Id = newlyCreatedPostTagId;
+                }
+            }
+        }
+
+        public void DeletePostTag(PostTag postTag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                     DELETE FROM PostTag Where PostId = @postId AND TagId=@tagId;
+                        ";
+                    cmd.Parameters.AddWithValue("@postId", postTag.PostId);
+                    cmd.Parameters.AddWithValue("@tagId", postTag.TagId);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void DeleteTag(int tagId)
         {
             using (var conn = Connection)
