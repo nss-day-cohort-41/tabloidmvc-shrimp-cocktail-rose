@@ -7,12 +7,6 @@
 
 <div class="container pt-5">
     <h3>Are you sure you want to deactivate @Model.FullName?</h3>
-    <form asp-action="Delete">
-        <input type="submit" value="Deactivate" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </form>
-
-    <br />
 
     @if (Model.Error)
     {
@@ -21,6 +15,11 @@
         </div>
     }
 
+    <form asp-action="Delete">
+        <input type="submit" value="Deactivate" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+    <br />
     <div>
         <dl class="row">
             <dt class="col-sm-2">
