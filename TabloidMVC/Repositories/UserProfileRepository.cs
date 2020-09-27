@@ -270,12 +270,17 @@ namespace TabloidMVC.Repositories
                         SELECT @Admins = Count(*)
                         FROM UserProfile
                         WHERE UserTypeId = 1 AND IsDeactivated = 0
-                        IF @Admins = 1 AND @userTypeId = 2
-                            THROW 51000, 'There must be at least 1 admin', 1
+                        IF @Admins = 1 
+                            IF (SELECT UserTypeId FROM UserProfile WHERE id = @id) = 1 AND @userTypeId = 2
+                                THROW 51000, 'There must be at least 1 admin', 1
+                            ELSE
+                                UPDATE UserProfile
+	                            SET UserTypeId = @userTypeId	   
+                                WHERE Id = @id                              
                         ELSE
                             UPDATE UserProfile
 	                        SET UserTypeId = @userTypeId	   
-                            WHERE Id = @id";
+                            WHERE Id = @id ";
 
                     cmd.Parameters.AddWithValue("@userTypeId", user.UserTypeId);
                     cmd.Parameters.AddWithValue("@id", user.Id);
