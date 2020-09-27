@@ -281,6 +281,14 @@ namespace TabloidMVC.Repositories
                             UPDATE UserProfile
 	                        SET UserTypeId = @userTypeId	   
                             WHERE Id = @id ";
+                    
+                    /* IF there is only one admin in database 
+                           IF editing an admin and changing their usertype to Author
+                               THROW an error
+                           ELSE
+                               update user
+                       ELSE
+                           update user */
 
                     cmd.Parameters.AddWithValue("@userTypeId", user.UserTypeId);
                     cmd.Parameters.AddWithValue("@id", user.Id);
