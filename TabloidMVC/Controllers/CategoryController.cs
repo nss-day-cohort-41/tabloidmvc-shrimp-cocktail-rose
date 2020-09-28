@@ -89,6 +89,7 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Category category)
         {
+            //Stops user from deleting "Other" category
             if (id != 14)
             {
                 try
