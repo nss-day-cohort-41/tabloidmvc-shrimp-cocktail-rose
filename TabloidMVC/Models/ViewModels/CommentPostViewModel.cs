@@ -12,5 +12,7 @@ namespace TabloidMVC.Models.ViewModels
         public List<Comment> Comments { get; set; }
 
         public UserProfile Profile { get; set; }
+
+        public int UserId { get; set; }
     }
 }

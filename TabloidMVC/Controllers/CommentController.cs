@@ -35,29 +35,31 @@ namespace TabloidMVC.Controllers
         }
 
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var vm = new CommentPostViewModel();
             vm.Post = _postRepository.GetPublishedPostById(id);
-            vm.Comments = _commentRepository.GetAll(id, _userProfileRepository);
+           
+            vm.Comments = _commentRepository.GetAll(id);
+            vm.UserId = GetCurrentUserProfileId();
             
             return View(vm);
         }
 
 
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, Comment comment)
+        public IActionResult Create(int id, Comment comment)
         {
             try
             {
@@ -75,11 +77,39 @@ namespace TabloidMVC.Controllers
             {
                 return View(comment);
             }
-            //need to add postID!!==============================================
+           
+        }
 
-            //need to get userId!
 
-            
+        public IActionResult Delete(int id)
+        {
+            Comment comment = _commentRepository.GetCommentById(id);
+
+            return View(comment);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, Comment comment)
+        {
+            try
+            {
+
+                Comment userC = _commentRepository.GetCommentById(id);
+               int postId = userC.PostId;
+                _commentRepository.Delete(id);
+               
+                return Redirect($"~/Post/Details/{postId}");
+
+            }
+
+            catch
+            {
+                return View(comment);
+            }
         }
         
         public ActionResult Edit(int id)
