@@ -97,18 +97,16 @@ namespace TabloidMVC.Controllers
         {
             try
             {
-                var vm = new CommentPostViewModel();
 
-                vm.Comments = _commentRepository.GetAll(comment.PostId);
-                vm.Post = _postRepository.GetPublishedPostById(comment.PostId);
-
-                int postId = comment.PostId;
+                Comment userC = _commentRepository.GetCommentById(id);
+               int postId = userC.PostId;
                 _commentRepository.Delete(id);
-               ///errror is here
+                ///errror is here
 
 
-              
-                return RedirectToAction("details", "Comment", new { id = vm.Post.Id });
+
+                return Redirect($"~/Post/Details/{postId}");
+
             }
 
             catch
