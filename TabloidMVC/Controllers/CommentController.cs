@@ -101,10 +101,7 @@ namespace TabloidMVC.Controllers
                 Comment userC = _commentRepository.GetCommentById(id);
                int postId = userC.PostId;
                 _commentRepository.Delete(id);
-                ///errror is here
-
-
-
+               
                 return Redirect($"~/Post/Details/{postId}");
 
             }
