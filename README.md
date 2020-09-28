@@ -1,5 +1,5 @@
 # Team Shrimp Cocktail: TabloidMVC
-Team Shrimp Cocktail was tasked to build the TabloidMVC application following the criteria below and inside the issue tickets.
+Team Shrimp Cocktail was tasked with building the TabloidMVC application following the criteria below and inside the issue tickets.
 
 Concepts covered in this project include: ASP.NET MVC, C#, SQL, SCRUM and Agile Workflows
 
@@ -10,7 +10,7 @@ Concepts covered in this project include: ASP.NET MVC, C#, SQL, SCRUM and Agile 
 
 ## Christopher McColgan
 - Created new user registration functionality
-- Added post edit and delete functionalty
+- Added post edit and delete functionality
 - Created method to show estimated read time on posts
 - Created method to prevent loss of all admins in system
 
@@ -22,7 +22,7 @@ Concepts covered in this project include: ASP.NET MVC, C#, SQL, SCRUM and Agile 
 ## Brandon Wheatley
 - Created categories section
 - Category CRUD functionality
-- Categories are able to be assigned to posts
+- Categories can be assigned and unassigned from posts
 - Created user profile section
 - User profile Read, Update, and (soft) Delete functionality
 
