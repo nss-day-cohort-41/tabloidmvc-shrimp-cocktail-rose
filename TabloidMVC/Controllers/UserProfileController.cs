@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TabloidMVC.Models;
+using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Repositories;
 
 namespace TabloidMVC.Controllers
@@ -13,10 +15,12 @@ namespace TabloidMVC.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IUserTypeRepository _userTypeRepository;
 
-        public UserProfileController(IUserProfileRepository userProfileRepository)
+        public UserProfileController(IUserProfileRepository userProfileRepository, IUserTypeRepository userTypeRepository)
         {
             _userProfileRepository = userProfileRepository;
+            _userTypeRepository = userTypeRepository;
         }
         // GET: UserProfileController
         public ActionResult Index()
@@ -62,21 +66,44 @@ namespace TabloidMVC.Controllers
         // GET: UserProfileController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            UserProfile user = _userProfileRepository.GetById(id);
+            List<UserType> types = _userTypeRepository.GetAll();
+
+            UserProfileEditViewModel vm = new UserProfileEditViewModel()
+            {
+                UserProfile = user,
+                UserTypes = types
+            };
+
+            if (vm.UserProfile == null)
+            {
+                return NotFound();
+            }
+            return View(vm);
         }
 
         // POST: UserProfileController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, UserProfileEditViewModel user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _userProfileRepository.UpdateUser(user.UserProfile);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                user.UserProfile = _userProfileRepository.GetById(id);
+                user.UserProfile.Error = true;
+                List<UserType> types = _userTypeRepository.GetAll();
+                user.UserTypes = types;
+
+                if (user.UserProfile == null)
+                {
+                    return NotFound();
+                }
+                return View(user);
             }
         }
 
