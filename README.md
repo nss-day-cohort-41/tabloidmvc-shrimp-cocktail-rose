@@ -1,3 +1,31 @@
+# Team Shrimp Cocktail: TabloidMVC
+Team Shrimp Cocktail was tasked with building the TabloidMVC application following the criteria below and inside the issue tickets.
+
+Concepts covered in this project include: ASP.NET MVC, C#, SQL, SCRUM and Agile Workflows
+
+## David Bruce
+- Created tags section
+- Tag CRUD (Create, Read, Update, Delete) functionality
+- Ability to assign and unassign tags to posts using join tables
+
+## Christopher McColgan
+- Created new user registration functionality
+- Added post edit and delete functionality
+- Created method to show estimated read time on posts
+- Created method to prevent loss of all admins in system
+
+## Gavin Swofford
+- Created comments section
+- Comment CRUD functionality
+- Comments are assigned to posts
+
+## Brandon Wheatley
+- Created categories section
+- Category CRUD functionality
+- Categories can be assigned and unassigned from posts
+- Created user profile section
+- User profile Read, Update, and (soft) Delete functionality
+
 # Tabloid MVC
 
 Good news, everyone, our [Tabloid CLI Proof of Concept](https://github.com/nashville-software-school/TabloidCLI) did it's job! We were able to test our business idea after a minimal amount of development time. And we learned people don't want to keep a list of other people's blog content. What they really want is to make their own content.
