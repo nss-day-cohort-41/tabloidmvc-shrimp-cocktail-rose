@@ -111,7 +111,7 @@ namespace TabloidMVC.Repositories
                     cmd.CommandText = @"
                     INSERT INTO Comment (
  PostId, UserProfileId, Subject, Content, CreateDateTime)
-VALUES (@PostId, @UserProfileId, @Content, @Subject, @CreateDateTime)";
+VALUES (@PostId, @UserProfileId, @Subject, @Content, @CreateDateTime)";
 
                     cmd.Parameters.AddWithValue("@PostId",comment.PostId);
                     cmd.Parameters.AddWithValue("@UserProfileId", comment.UserProfileId);
