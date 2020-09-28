@@ -24,11 +24,14 @@
             {
                 <tr>
                     <td>
+                        <p>@comment.Content</p>
                         @comment.Subject
                     </td>
                     <td>
                         <div>@comment.User.DisplayName <div>@comment.CreateDateTime</div></div>
-                        <p>@comment.Content</p>
+                        <a asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-primary mx-1" title="Edit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                     </td>
                 </tr>
             }

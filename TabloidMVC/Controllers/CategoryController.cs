@@ -89,16 +89,26 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Category category)
         {
-            try
+            //Stops user from deleting "Other" category
+            if (id != 14)
             {
-                _categoryRepository.DeleteCategory(id);
-                return RedirectToAction("Index");
-                    
+                try
+                {
+                    _categoryRepository.DeleteCategory(id);
+                    return RedirectToAction("Index");
+
+                }
+                catch
+                {
+                    return View(category);
+                }
             }
-            catch
+            else
             {
+                category.Error = true;
                 return View(category);
             }
+        
         }
     }
 }
