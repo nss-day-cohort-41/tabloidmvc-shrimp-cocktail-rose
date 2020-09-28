@@ -92,8 +92,15 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Comment comment)
         {
+            try
+            {
                 _commentRepository.UpdateComment(comment);
             return Redirect($"~/Post/Details/{comment.PostId}");
+
+            } catch (Exception ex)
+            {
+                return View(comment);
+            }
 
         }
     }
