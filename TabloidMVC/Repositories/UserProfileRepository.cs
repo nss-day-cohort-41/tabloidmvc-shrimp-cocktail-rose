@@ -265,9 +265,30 @@ namespace TabloidMVC.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE UserProfile
-	                                       SET UserTypeId = @userTypeId	   
-                                         WHERE Id = @id";
+                    cmd.CommandText = @"
+                        DECLARE @Admins INT
+                        SELECT @Admins = Count(*)
+                        FROM UserProfile
+                        WHERE UserTypeId = 1 AND IsDeactivated = 0
+                        IF @Admins = 1 
+                            IF (SELECT UserTypeId FROM UserProfile WHERE id = @id) = 1 AND @userTypeId = 2
+                                THROW 51000, 'There must be at least 1 admin', 1
+                            ELSE
+                                UPDATE UserProfile
+	                            SET UserTypeId = @userTypeId	   
+                                WHERE Id = @id                              
+                        ELSE
+                            UPDATE UserProfile
+	                        SET UserTypeId = @userTypeId	   
+                            WHERE Id = @id ";
+                    
+                    /* IF there is only one admin in database 
+                           IF editing an admin and changing their usertype to Author
+                               THROW an error
+                           ELSE
+                               update user
+                       ELSE
+                           update user */
 
                     cmd.Parameters.AddWithValue("@userTypeId", user.UserTypeId);
                     cmd.Parameters.AddWithValue("@id", user.Id);

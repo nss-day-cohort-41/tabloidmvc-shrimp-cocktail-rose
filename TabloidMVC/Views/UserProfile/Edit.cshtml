@@ -9,11 +9,16 @@
     <div class="row justify-content-center">
         <div class="card col-md-12 col-lg-8">
             <h3 class="mt-3 text-primary text-center card-title">What type of user is @Model.UserProfile.DisplayName?</h3>
+            
+            @if (Model.UserProfile.Error)
+            {
+            <div class="alert alert-danger" role="alert">
+                Unable to change user type. There must be at least one administrator.
+            </div>
+            }
+
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="UserProfile.Id" type="hidden" class="form-control" />
-                </div>
                 <div class="form-group">
                     <select asp-for="UserProfile.UserTypeId" class="form-control">
                         <option value="">Select User Type</option>
@@ -24,6 +29,7 @@
                     </select>
                     <span asp-validation-for="UserProfile.UserTypeId" class="text-danger"></span>
                 </div>
+                <input asp-for="UserProfile.Id" type="hidden" class="form-control" />           
                 <input asp-for="UserProfile.FirstName" hidden class="form-control" />
                 <input asp-for="UserProfile.LastName" hidden class="form-control" />
                 <input asp-for="UserProfile.ImageLocation" hidden class="form-control" />

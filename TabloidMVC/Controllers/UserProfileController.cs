@@ -87,8 +87,24 @@ namespace TabloidMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, UserProfileEditViewModel user)
         {
+            try
+            {
                 _userProfileRepository.UpdateUser(user.UserProfile);
                 return RedirectToAction("Index");
+            }
+            catch
+            {
+                user.UserProfile = _userProfileRepository.GetById(id);
+                user.UserProfile.Error = true;
+                List<UserType> types = _userTypeRepository.GetAll();
+                user.UserTypes = types;
+
+                if (user.UserProfile == null)
+                {
+                    return NotFound();
+                }
+                return View(user);
+            }
         }
 
         // GET: UserProfileController/Reactivate/5
